@@ -12,11 +12,11 @@ jobs:
       - uses: actions/setup-node@v4
 
       - name: Install dependencies
-        working-directory: ./src/frontend
-        run: yarn
+        working-directory: src/frontend
+        run: yarn install
 
       - name: Linting
-        working-directory: ./src/frontend
+        working-directory: src/frontend
         run: yarn lint
 
   frontend-build:

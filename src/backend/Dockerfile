@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk add --no-cache postgresql-libs libxml2-dev libxslt-dev && apk add --no-cache --virtual .build-deps gcc python3-dev musl-dev postgresql-dev
 
-COPY ./requirements.txt, .
+COPY ./requirements.txt .
 
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
@@ -20,6 +20,6 @@ COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
-COPY ./, .
+COPY ./ .
 
 EXPOSE 4000
