@@ -4,7 +4,7 @@ export const useDebounceValue = <T>(cb: () => void, value: T) => {
   useEffect(() => {
     const timeoutId = setTimeout(cb, 500);
     return () => clearTimeout(timeoutId);
-  }, [value]);
+  }, [value, cb]);
 
   return value;
 };

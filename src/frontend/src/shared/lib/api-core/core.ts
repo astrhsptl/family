@@ -1,6 +1,7 @@
-import { API_SERVER_URL, CSI, EntityId } from '@/shared';
+import { API_SERVER_URL } from '@/shared';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { PaginatedResult } from './types';
+import { CSI } from '../credential-storage';
+import { EntityId, PaginatedResult } from './types';
 
 const DefaultTriesCount = 2;
 
