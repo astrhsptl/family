@@ -20,6 +20,5 @@ COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
-COPY ./ .
 
-EXPOSE 4000
+COPY ./ .
