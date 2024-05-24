@@ -9,14 +9,15 @@ jobs:
   frontend-lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v4
+
       - name: Install dependencies
         working-directory: ./src/frontend
-        uses: actions/setup-node@v4
         run: yarn
 
       - name: Linting
         working-directory: ./src/frontend
-        uses: yarn lint
+        run: yarn lint
 
   frontend-build:
     runs-on: ubuntu-latest
