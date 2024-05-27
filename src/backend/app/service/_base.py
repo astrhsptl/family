@@ -39,7 +39,6 @@ class BaseService:
 
     async def create(self, data: dict):
         result = await self._repository.create(data)
-        print(result)
 
         if result.detail:
             return ErrorResponse(detail=result.detail, status_code=result.status_code)

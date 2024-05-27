@@ -1,4 +1,3 @@
-from typing import AsyncIterator
 from uuid import UUID
 
 from domain.database import SESSION
@@ -6,7 +5,6 @@ from domain.models._base import Model
 from domain.structures import ResultData
 from sqlalchemy import Select, delete, func, select
 from sqlalchemy.exc import DBAPIError, IntegrityError
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class BaseRepository:
@@ -41,7 +39,7 @@ class BaseRepository:
         )
 
         try:
-            async with self._session() as session:
+            async with SESSION() as session:
                 data = await session.scalar(statement)
                 return result.set_result(None, data)
         except IntegrityError as e:
@@ -89,18 +87,13 @@ class BaseRepository:
         statement = delete(self.model).where(self.model.id == id)
 
         try:
-            async with self._session() as session:
+            async with SESSION() as session:
                 await session.scalar(statement)
                 return result.set_result(None, "Entity success deleted")
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:
             return result.set_error(500, "Database Error")
-
-    @staticmethod
-    async def _session() -> AsyncIterator[AsyncSession]:
-        async with SESSION() as session:
-            yield session
 
     def _mutate_statement_by_order(
         self, statement: Select, ordering_column: str | None
