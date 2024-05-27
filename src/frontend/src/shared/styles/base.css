@@ -146,6 +146,12 @@ table {
   border-spacing: 0;
 }
 
+main {
+  width: 100dvw;
+  max-width: 100dvw;
+  min-height: 100dvh;
+}
+
 @media (max-width: 750px) {
   .container {
     max-width: 95%;

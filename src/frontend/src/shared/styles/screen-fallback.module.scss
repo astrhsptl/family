@@ -1,0 +1,14 @@
+@import './base.module.scss';
+
+.container {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  background-color: var(--c-blue);
+  width: 100dvw;
+  height: 100dvh;
+
+  @include font(28px, 700, 1.1em, var(--c-white));
+}

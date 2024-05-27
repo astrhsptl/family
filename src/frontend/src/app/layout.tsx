@@ -1,4 +1,4 @@
-import { RootProvider } from '@/features';
+import '@/shared/styles/base.css';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -8,9 +8,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en'>
       <body>
-        <RootProvider>
-          <div id='root'>{children}</div>
-        </RootProvider>
+        <main>{children}</main>
       </body>
     </html>
   );

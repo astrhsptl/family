@@ -1,11 +1,17 @@
-import { FC, ReactNode } from 'react';
+import { RootProvider } from '@/features';
+import { FC, ReactNode, Suspense } from 'react';
+import Loading from './loading';
 
-interface SomeoneProps {
+interface DefaultTemplateProps {
   children: ReactNode;
 }
 
-const SomeoneTemplate: FC<SomeoneProps> = ({ children }) => {
-  return <div>{children}</div>;
+const DefaultTemplateTemplate: FC<DefaultTemplateProps> = ({ children }) => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <RootProvider>{children}</RootProvider>
+    </Suspense>
+  );
 };
 
-export default SomeoneTemplate;
+export default DefaultTemplateTemplate;

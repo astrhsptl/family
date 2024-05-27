@@ -8,5 +8,7 @@ interface RootProviderProps {
 }
 
 export const RootProvider: FC<RootProviderProps> = ({ children }) => {
+  console.log('all providers successfully loaded');
+
   return <StoreProvider>{children}</StoreProvider>;
 };
