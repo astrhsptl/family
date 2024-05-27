@@ -54,7 +54,7 @@ class BaseRepository:
         entity = self.model(**data)
 
         try:
-            async with self._session() as session:
+            async with SESSION() as session:
                 session.add(entity)
                 await session.commit()
                 await session.refresh(entity)

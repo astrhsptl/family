@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(event_controller, prefix="/api/v1")
 app.include_router(family_controller, prefix="/api/v1")
 app.include_router(task_controller, prefix="/api/v1")
 app.include_router(user_controller, prefix="/api/v1")
-app.include_router(event_controller, prefix="/api/v1")

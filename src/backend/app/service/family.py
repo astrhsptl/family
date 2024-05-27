@@ -2,7 +2,7 @@ from repository import FamilyRepository
 
 from app.schemas import FamilyRead
 
-from .BaseService import BaseService
+from ._base import BaseService
 
 
 class FamilyService(BaseService):

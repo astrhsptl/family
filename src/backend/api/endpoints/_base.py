@@ -1,138 +1,96 @@
-from typing import Self, TypeVar
 from uuid import UUID
 
-from app.service.BaseService import BaseService
-from domain.structures.paginated_result import (
-    ErrorResponse,
-    SuccessResponse,
-    unique_paginated_model,
-)
-from fastapi import APIRouter, HTTPException, Request
+from app.service._base import BaseService
+from domain.structures.paginated_result import SuccessResponse
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
-
-R = TypeVar("R", bound=BaseModel)
-C = TypeVar("C", bound=BaseModel)
-U = TypeVar("U", bound=BaseModel)
 
 
 class Controller:
-    read_model: R
-    create_model: C
-    update_model: U
-    service: BaseService
+    read_model: BaseModel = None
+    create_model: BaseModel = None
+    update_model: BaseModel = None
+    service: BaseService = None
 
     def __init__(
-        self: Self,
-        prefix: str | None = None,
-        tags: list[str] | None = None,
-    ) -> None:
-        self.prefix: str = prefix
-        self.operation_id: str = prefix.replace("/", "")
+        self,
+        prefix: str,
+        tags: list[str] = [],
+        dependencies: list[str] = [],
+    ):
+        # create routes
         self.controller = APIRouter(prefix=prefix, tags=tags)
-        self.dependencies = []
+        self.operation_id = prefix.replace("/", "")
+        self.dependencies = dependencies
 
-    def build(self) -> APIRouter:
+    def build(self):
+        async def __create(data: self.create_model):
+            return await self.__create(data.model_dump(exclude_unset=True))
+
+        async def __update(id: UUID, data: self.update_model):
+            return await self.__update(id, data.model_dump(exclude_unset=True))
+
         self.controller.add_api_route(
             "/",
-            self.get,
+            self.__get,
             methods=["GET"],
-            response_model=unique_paginated_model(self.read_model),
+            response_model=self.read_model,
             operation_id=f"get_{self.operation_id}",
             dependencies=self.dependencies,
         )
         self.controller.add_api_route(
             "/{entity_id:uuid}/",
-            self.get_by_id,
+            self.__get_by_id,
             methods=["GET"],
             response_model=self.read_model,
             operation_id=f"get_by_id_{self.operation_id}",
         )
-        self.create.__annotations__["data"] = self.create_model
         self.controller.add_api_route(
             "/",
-            self.create,
+            __create,
             methods=["POST"],
             response_model=self.read_model,
             operation_id=f"create_{self.operation_id}",
         )
-        self.update.__annotations__["data"] = self.update_model
         self.controller.add_api_route(
             "/{entity_id:uuid}/",
-            self.update,
+            __update,
             methods=["PATCH"],
             response_model=self.read_model,
             operation_id=f"update_{self.operation_id}",
         )
         self.controller.add_api_route(
             "/{entity_id:uuid}/",
-            self.delete,
+            self.__delete,
             methods=["DELETE"],
             response_model=None,
             operation_id=f"delete_{self.operation_id}",
         )
+
         return self.controller
 
-    async def get(
-        self: Self,
+    async def __get(
+        self,
         request: Request,
         page: int = 1,
         quantity: int = 1000,
         order_by: str | None = None,
     ):
-        data = await self.service.get_all(request, page, quantity, order_by)
-
-        if isinstance(data, ErrorResponse):
-            raise HTTPException(data.status_code, data.detail)
-
-        return data
-
-    async def get_by_id(
-        self: Self,
-        id: UUID,
-    ):
-        data = await self.service.get_by_id(id=id)
-
-        if isinstance(data, ErrorResponse):
-            raise HTTPException(data.status_code, data.detail)
-
-        return data
-
-    async def create(
-        self: Self,
-        data: C,
-    ):
-        data = await self.service.create(
-            data=data.model_dump(exclude_unset=True),
+        return await self.service.get_all(
+            page=page,
+            quantity=quantity,
+            request=request,
+            order_by=order_by,
         )
 
-        if isinstance(data, ErrorResponse):
-            raise HTTPException(data.status_code, data.detail)
+    async def __get_by_id(self, id: UUID):
+        return await self.service.get_by_id(id=id)
 
-        return data
+    async def __create(self, data):
+        return await self.service.create(data=data)
 
-    async def update(
-        self: Self,
-        id: UUID,
-        data: U,
-    ):
-        data = await self.service.update(
-            id=id, data=data.model_dump(exclude_unset=True)
-        )
+    async def __update(self, id: UUID, data):
+        return await self.service.update(id=id, data=data)
 
-        if isinstance(data, ErrorResponse):
-            raise HTTPException(data.status_code, data.detail)
-
-        return data
-
-    async def delete(
-        self: Self,
-        id: UUID,
-    ) -> SuccessResponse:
-        data = await self.service.delete(
-            id=id,
-        )
-
-        if isinstance(data, ErrorResponse):
-            raise HTTPException(data.status_code, data.detail)
-
-        return data
+    async def __delete(self, id: UUID) -> SuccessResponse:
+        return await self.service.delete(id=id)

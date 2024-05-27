@@ -2,7 +2,7 @@ from repository import TaskRepository
 
 from app.schemas import TaskRead
 
-from .BaseService import BaseService
+from ._base import BaseService
 
 
 class TaskService(BaseService):

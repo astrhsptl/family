@@ -2,7 +2,7 @@ from repository import UserRepository
 
 from app.schemas import UserRead
 
-from .BaseService import BaseService
+from ._base import BaseService
 
 
 class UserService(BaseService):

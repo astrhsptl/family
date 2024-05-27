@@ -2,7 +2,7 @@ from repository import EventRepository
 
 from app.schemas import EventRead
 
-from .BaseService import BaseService
+from ._base import BaseService
 
 
 class EventService(BaseService):
