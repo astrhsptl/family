@@ -1,8 +1,8 @@
 from uuid import UUID
 
 from app.service._base import BaseService
-from domain.structures.paginated_result import SuccessResponse
-from fastapi import APIRouter, Request
+from domain.structures.paginated_result import ErrorResponse, SuccessResponse
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 
 
@@ -84,13 +84,33 @@ class Controller:
         )
 
     async def __get_by_id(self, id: UUID):
-        return await self.service.get_by_id(id=id)
+        data = await self.service.get_by_id(id=id)
+
+        if isinstance(data, (ErrorResponse,)):
+            raise HTTPException(data.status_code, data.detail)
+
+        return data
 
     async def __create(self, data):
-        return await self.service.create(data=data)
+        data = await self.service.create(data=data)
+
+        if isinstance(data, (ErrorResponse,)):
+            raise HTTPException(data.status_code, data.detail)
+
+        return data
 
     async def __update(self, id: UUID, data):
-        return await self.service.update(id=id, data=data)
+        data = await self.service.update(id=id, data=data)
+
+        if isinstance(data, (ErrorResponse,)):
+            raise HTTPException(data.status_code, data.detail)
+
+        return data
 
     async def __delete(self, id: UUID) -> SuccessResponse:
-        return await self.service.delete(id=id)
+        data = await self.service.delete(id=id)
+
+        if isinstance(data, (ErrorResponse,)):
+            raise HTTPException(data.status_code, data.detail)
+
+        return data

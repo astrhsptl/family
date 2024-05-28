@@ -6,8 +6,9 @@ T = TypeVar("T")
 
 @dataclass
 class ResultData(Generic[T]):
-    count: int | None = None
     data: T | None = None
+    count: int | None = None
+
     status_code: int | None = None
     detail: str | None = None
 
@@ -24,9 +25,9 @@ class ResultData(Generic[T]):
 
         return (self.status_code, self.detail)
 
-    def set_result(self, count: int | None, data: T):
-        self.count = count
+    def set_result(self, data: T, count: int | None = None):
         self.data = data
+        self.count = count
 
         return self
 

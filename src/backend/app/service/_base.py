@@ -30,7 +30,7 @@ class BaseService:
         return self._paginate(request, result.count, result.data, page, quantity)
 
     async def get_by_id(self, id: str | UUID):
-        result = await self._repository.get_by_id(id)
+        result = await self._repository.get_by_condition(id=id)
 
         if result.detail:
             return ErrorResponse(detail=result.detail, status_code=result.status_code)

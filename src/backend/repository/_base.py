@@ -26,22 +26,26 @@ class BaseRepository:
             async with SESSION() as session:
                 count_result: int = await session.scalar(count)
                 data = (await session.execute(statement)).unique().scalars().all()
-                return result.set_result(count_result, data)
+                return result.set_result(data, count_result)
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:
             return result.set_error(500, "Database Error")
 
-    async def get_by_id(self, id: str | UUID) -> ResultData[Model]:
-        result = ResultData[Model]()
+    async def get_by_condition(self, **kwargs) -> ResultData[Model]:
+        result = ResultData[self.model]()
         statement = (
-            select(self.model).select_from(self.model).where(self.model.id == id)
+            select(self.model)
+            .select_from(self.model)
+            .where(
+                *[getattr(self.model, key) == value for key, value in kwargs.items()]
+            )
         )
 
         try:
             async with SESSION() as session:
                 data = await session.scalar(statement)
-                return result.set_result(None, data)
+                return result.set_result(data)
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:
@@ -56,7 +60,7 @@ class BaseRepository:
                 session.add(entity)
                 await session.commit()
                 await session.refresh(entity)
-                return result.set_result(None, entity)
+                return result.set_result(entity)
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:
@@ -76,7 +80,7 @@ class BaseRepository:
 
                 await session.commit()
                 await session.refresh(entity)
-                return result.set_result(None, entity.data)
+                return result.set_result(entity.data)
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:
@@ -89,7 +93,7 @@ class BaseRepository:
         try:
             async with SESSION() as session:
                 await session.scalar(statement)
-                return result.set_result(None, "Entity success deleted")
+                return result.set_result("Entity success deleted")
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:

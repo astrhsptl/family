@@ -11,7 +11,7 @@ class User(Model):
 
     first_name: Mapped[str] = mapped_column(nullable=False)
     last_name: Mapped[str] = mapped_column(nullable=False)
-    email: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(nullable=False, unique=True, index=True)
     password: Mapped[str] = mapped_column(nullable=False)
 
     family_id: Mapped[UUID | None] = mapped_column(

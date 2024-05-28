@@ -6,3 +6,5 @@ alembic
 uvicorn
 asyncpg
 psycopg2-binary
+passlib
+python-jose
