@@ -68,6 +68,19 @@ $alert-index: 5;
   }
 }
 
+@mixin baseModal {
+  display: none;
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100dvw;
+  height: 100dvh;
+
+  overflow: hidden;
+}
+
 .container {
   @include container();
 }
@@ -85,7 +98,14 @@ $alert-index: 5;
   width: 100%;
   max-width: 300px;
 
-  &:focus {
-    background-color: aqua;
+  cursor: pointer;
+}
+
+.baseModalBackground {
+  @include baseModal();
+
+  &.active {
+    display: grid;
+    background-color: var(--c-modal-background);
   }
 }

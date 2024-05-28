@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 
 export const useDebounceValue = <T>(cb: () => void, value: T) => {

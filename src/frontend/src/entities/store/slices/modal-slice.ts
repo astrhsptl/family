@@ -1,18 +1,29 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../types';
 
-const initialState: boolean = false;
+const isActive: boolean = false;
 
 export const modalStateSlice = createSlice({
   name: 'modalState',
-  initialState: initialState,
+  initialState: isActive,
   reducers: {
-    toggle(state, action: PayloadAction<unknown>) {
+    toggle(state) {
       state = !state;
+      return state;
+    },
+
+    open(state) {
+      state = true;
+      return state;
+    },
+
+    close(state) {
+      state = false;
+      return state;
     },
   },
 });
 
-export const { toggle } = modalStateSlice.actions;
+export const { toggle, open, close } = modalStateSlice.actions;
 export const modalStateReducer = modalStateSlice.reducer;
 export const currentModalState = (state: RootState) => state.modalState;

@@ -1,58 +1,45 @@
 'use client';
 
 import { HeaderStyles, NavLink } from '@/shared';
+import { useClientModalStatement } from '@/shared/lib/hooks/use-client-modal-statement';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
+import { headerMap } from './model';
+import { NavBar } from './ui';
 
 interface HeaderProps {}
 
-export const Header: React.FC<HeaderProps> = async () => {
+export const Header: React.FC<HeaderProps> = () => {
+  const tools = useClientModalStatement();
+
   return (
     <header className={HeaderStyles.header}>
       <Image src={'/favicon.svg'} alt='icon' height={40} width={40} />
-      <div>
-        <NavLink
-          href={'/'}
-          className={(isActive) =>
-            clsx(HeaderStyles.headerLink, isActive ? HeaderStyles.current : '')
-          }
-        >
-          Home
-        </NavLink>
-        <NavLink
-          href={'/family'}
-          className={(isActive) =>
-            clsx(HeaderStyles.headerLink, isActive ? HeaderStyles.current : '')
-          }
-        >
-          Family
-        </NavLink>
-        <NavLink
-          href={'/logout'}
-          className={(isActive) =>
-            clsx(HeaderStyles.headerLink, isActive ? HeaderStyles.current : '')
-          }
-        >
-          Logout
-        </NavLink>
-        <NavLink
-          href={'/sign-up'}
-          className={(isActive) =>
-            clsx(HeaderStyles.headerLink, isActive ? HeaderStyles.current : '')
-          }
-        >
-          Sign up
-        </NavLink>
-        <NavLink
-          href={'/sign-in'}
-          className={(isActive) =>
-            clsx(HeaderStyles.headerLink, isActive ? HeaderStyles.current : '')
-          }
-        >
-          Sign in
-        </NavLink>
+      <div className={HeaderStyles.homeLinkBar}>
+        {Object.entries(headerMap).map(([name, link]) => (
+          <NavLink
+            href={link}
+            key={name}
+            className={(isActive) =>
+              clsx(
+                HeaderStyles.headerLink,
+                isActive ? HeaderStyles.current : ''
+              )
+            }
+          >
+            {name}
+          </NavLink>
+        ))}
       </div>
+      <Image
+        src={'/menu.svg'}
+        alt='icon'
+        height={40}
+        width={40}
+        onClick={tools.open}
+      />
+      <NavBar tools={tools} />
     </header>
   );
 };

@@ -8,7 +8,7 @@ type DefaultButtonProps = {
   isLoading?: boolean;
 } & JSX.IntrinsicElements['button'];
 
-export async function DefaultButton({
+export function DefaultButton({
   isLoading,
   children,
   style,

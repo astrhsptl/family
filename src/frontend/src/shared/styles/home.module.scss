@@ -6,4 +6,48 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   height: calc(100dvh - $headerHeight);
+
+  padding-top: 10%;
+}
+
+.homeText {
+  @include font(16px);
+  padding-right: 20%;
+
+  & > h1 {
+    font-weight: 700;
+    font-size: 36px;
+    margin-bottom: 20px;
+    line-height: 36px;
+  }
+
+  & > p {
+    margin-bottom: 20px;
+  }
+}
+
+.homeImg {
+  justify-self: end;
+}
+
+@media (max-width: 950px) {
+  .homeImg {
+    display: none;
+  }
+
+  .homeContainer {
+    grid-template-columns: none;
+    padding-top: 0;
+  }
+
+  .homeText {
+    @include flexCenterColumn();
+    justify-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding-right: 10%;
+    padding-left: 10%;
+  }
 }

@@ -10,12 +10,12 @@
   padding-bottom: 10px;
 
   height: $headerHeight;
+}
 
-  & > div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.homeLinkBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .headerLink {
@@ -23,5 +23,46 @@
 
   &.current {
     text-decoration: underline;
+  }
+}
+
+.navbar {
+  @include baseModal();
+  display: grid;
+  grid-template-rows: $headerHeight calc(100dvh - $headerHeight);
+  position: absolute;
+
+  left: -100dvw;
+
+  background-color: var(--c-white);
+
+  transition: all 0.3s ease-in-out;
+
+  &.active {
+    left: 0;
+  }
+}
+
+.navLinkContainer {
+  @include container();
+  @include flexColumn();
+
+  padding-top: 48px;
+  gap: 40px;
+}
+
+.navLink {
+  @include font(36px, 700, 40px, var(--c-dark-gray));
+
+  text-decoration: none;
+
+  &.current {
+    color: var(--c-red);
+  }
+}
+
+@media (max-width: 700px) {
+  .homeLinkBar {
+    display: none;
   }
 }
