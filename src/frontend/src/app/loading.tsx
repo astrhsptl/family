@@ -1,12 +1,7 @@
 'use client';
 
 import { ScreenFallbackLoader } from '@/widgets';
-import { FC } from 'react';
 
-interface LoadingProps {}
-
-const Loading: FC<LoadingProps> = () => {
+export default function Loading() {
   return <ScreenFallbackLoader />;
-};
-
-export default Loading;
+}

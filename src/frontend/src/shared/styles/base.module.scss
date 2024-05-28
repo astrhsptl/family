@@ -1,3 +1,6 @@
+/* sizes */
+$headerHeight: 60px;
+
 /* base colors */
 $main-color: #fff;
 
@@ -39,4 +42,50 @@ $alert-index: 5;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+@mixin container {
+  padding: 0 10%;
+}
+
+@mixin baseLink {
+  @include font(14px);
+  text-decoration: none;
+
+  &:active {
+    text-decoration: none;
+    color: var(--c-black);
+  }
+}
+
+@mixin baseButton {
+  @include font(14px);
+  text-decoration: none;
+
+  &:active {
+    text-decoration: none;
+    color: var(--c-black);
+  }
+}
+
+.container {
+  @include container();
+}
+
+.baseButton {
+  @include font(14px, 700, 1.1em, var(--c-white));
+
+  border: none;
+  outline: none;
+  border-radius: 16px;
+
+  background-color: var(--c-dark-gray);
+
+  padding: 16px 40px;
+  width: 100%;
+  max-width: 300px;
+
+  &:focus {
+    background-color: aqua;
+  }
 }

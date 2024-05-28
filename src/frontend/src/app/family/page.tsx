@@ -1,4 +1,4 @@
-import { Header, HomepageLayout } from '@/widgets';
+import { Header } from '@/widgets';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,11 +7,10 @@ export const metadata: Metadata = {
   description: 'First page',
 };
 
-export default async function HomePage() {
+export default async function FamilyPage() {
   return (
     <>
       <Header />
-      <HomepageLayout />
     </>
   );
 }

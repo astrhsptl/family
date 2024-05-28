@@ -1,5 +1,6 @@
 import clsx, { ClassValue } from 'clsx';
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import { BaseStyle } from '../styles';
 
 type DefaultButtonProps = {
   children?: ReactNode | string;
@@ -7,16 +8,19 @@ type DefaultButtonProps = {
   isLoading?: boolean;
 } & JSX.IntrinsicElements['button'];
 
-export const DefaultButton: FC<DefaultButtonProps> = ({
+export async function DefaultButton({
   isLoading,
   children,
   style,
   className,
   ...other
-}) => {
+}: DefaultButtonProps) {
   return (
-    <button {...other} className={clsx(className)}>
+    <button
+      {...other}
+      className={clsx(className ? className : BaseStyle.baseButton)}
+    >
       {children}
     </button>
   );
-};
+}

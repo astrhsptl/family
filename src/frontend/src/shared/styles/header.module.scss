@@ -1,0 +1,27 @@
+@import './base.module.scss';
+
+.header {
+  @include container();
+
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  height: $headerHeight;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.headerLink {
+  @include baseLink();
+
+  &.current {
+    text-decoration: underline;
+  }
+}

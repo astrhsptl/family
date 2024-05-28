@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorMessage } from '@hookform/error-message';
 import { ClassValue } from 'clsx';
 import React, { useState } from 'react';
@@ -17,7 +19,7 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
   type,
   placeholder,
 }) => {
-  const [isActiveInput, setIsActiveInput] = useState<boolean>(false);
+  const [_, setIsActiveInput] = useState<boolean>(false);
   const {
     formState: { errors },
     register,
