@@ -1,5 +1,9 @@
+import { RootProvider } from '@/features';
 import '@/shared/styles/base.css';
+import { Header } from '@/widgets';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -18,7 +22,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <meta name='theme-color' content='#fff' />
       </head>
       <body>
-        <main>{children}</main>
+        <main>
+          <RootProvider>
+            <Header />
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+          </RootProvider>
+        </main>
       </body>
     </html>
   );

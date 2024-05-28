@@ -1,6 +1,7 @@
 @import './base.module.scss';
 
 .container {
+  position: absolute;
   display: grid;
   justify-content: center;
   justify-items: center;
@@ -9,6 +10,9 @@
   background-color: var(--c-blue);
   width: 100dvw;
   height: 100dvh;
+
+  top: 0;
+  left: 0;
 
   @include font(28px, 700, 1.1em, var(--c-white));
 }
