@@ -19,20 +19,29 @@ class TLib:
     access_type = "access"
     refresh_type = "refresh"
 
-    def __create_access_token(self, data: dict):
+    def _create_access_token(self, data: TokenPayload):
         expire = datetime.now(UTC) + ACCESS_EXPIRES_TIME
-        data.update({"exp": expire})
-        data.update({"type": self.access_type})
-        return jwt.encode(data, SECRET_KEY, ALGORITHM)
+        token_payload = {
+            "exp": expire,
+            "sub": str(data.id),
+            "type": self.access_type,
+        }
+        return jwt.encode(token_payload, SECRET_KEY, ALGORITHM)
 
-    def __create_refresh_token(self, data: dict):
+    def _create_refresh_token(self, data: TokenPayload):
         expire = datetime.now(UTC) + REFRESH_EXPIRES_TIME
-        data.update({"exp": expire})
-        data.update({"type": self.refresh_type})
-        return jwt.encode(data, SECRET_KEY, ALGORITHM)
+        token_payload = {
+            "exp": expire,
+            "sub": str(data.id),
+            "type": self.refresh_type,
+        }
+        return jwt.encode(token_payload, SECRET_KEY, ALGORITHM)
 
     def verify_password(self, plain_password: str, user_password: str) -> bool:
-        return self.pwd_context.verify(plain_password, user_password)
+        try:
+            return self.pwd_context.verify(plain_password, user_password)
+        except:
+            return False
 
     def create_password_hash(self, password: str) -> str:
         return self.pwd_context.hash(password)
@@ -53,6 +62,6 @@ class TLib:
 
     def create_token_pair(self, data: TokenPayload):
         return TokenPair(
-            access=self.__create_access_token(data),
-            refresh=self.__create_refresh_token(data),
+            refresh=self._create_refresh_token(data),
+            access=self._create_access_token(data),
         )

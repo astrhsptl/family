@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from fastapi.security import OAuth2PasswordBearer
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class AuthenticationSchema(BaseModel):
@@ -19,7 +19,7 @@ class RegistrationSchema(BaseModel):
     last_name: str
     email: str
     password: str
-    family_id: UUID | None
+    family_id: UUID | None = Field(None)
 
 
 class TokenPayload(BaseModel):

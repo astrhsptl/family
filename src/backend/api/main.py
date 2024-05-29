@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .auth import auth_controller
 from .endpoints import (
     event_controller,
     family_controller,
@@ -18,6 +19,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(auth_controller, prefix="/api/auth")
 
 app.include_router(event_controller, prefix="/api/v1")
 app.include_router(family_controller, prefix="/api/v1")

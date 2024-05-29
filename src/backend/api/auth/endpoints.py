@@ -1,15 +1,15 @@
 from app.schemas.auth import (
-    OAUTH2_SCHEMA,
     AccessToken,
     AuthenticationSchema,
     RefreshToken,
     RegistrationSchema,
+    TokenPair,
 )
-from backend.app.schemas.auth import TokenPair
-from backend.app.schemas.user import UserRead
-from backend.app.service.auth import AuthService
-from backend.domain.structures.paginated_result import ErrorResponse
-from fastapi import APIRouter, Depends, HTTPException
+from app.schemas.user import UserRead
+from app.service import auth_dependency
+from app.service.auth import AuthService
+from domain.structures.paginated_result import ErrorResponse
+from fastapi import APIRouter, HTTPException
 
 controller = APIRouter(prefix="/auth", tags=["Auth"])
 service = AuthService()
@@ -28,15 +28,22 @@ async def authenticate(data: AuthenticationSchema) -> TokenPair:
     return data
 
 
+@controller.post(
+    "/sign-up",
+    response_model=UserRead,
+)
 async def registration(data: RegistrationSchema) -> UserRead:
     data = await service.registration(data=data)
 
     if isinstance(data, (ErrorResponse,)):
         raise HTTPException(data.status_code, data.detail)
-
     return data
 
 
+@controller.post(
+    "/refresh",
+    response_model=AccessToken,
+)
 async def refresh(data: RefreshToken) -> AccessToken:
     data = await service.refresh(data=data)
 
@@ -46,7 +53,11 @@ async def refresh(data: RefreshToken) -> AccessToken:
     return data
 
 
-async def user_by_token(self, token: str | Depends(OAUTH2_SCHEMA)):
+@controller.get(
+    "/user",
+    response_model=UserRead,
+)
+async def user_by_token(token: AccessToken = auth_dependency) -> UserRead:
     data = await service.user_by_token(AccessToken(access=token))
 
     if isinstance(data, (ErrorResponse,)):

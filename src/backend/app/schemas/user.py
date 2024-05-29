@@ -18,7 +18,7 @@ class UserCreate(Model):
     last_name: str
     email: str
     password: str
-    family_id: UUID | None
+    family_id: UUID | None = Field(None)
 
 
 class UserUpdate(Model):
