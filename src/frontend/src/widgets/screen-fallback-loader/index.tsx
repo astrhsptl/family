@@ -8,7 +8,7 @@ interface ScreenFallbackLoaderProps {}
 export const ScreenFallbackLoader: React.FC<ScreenFallbackLoaderProps> = () => {
   return (
     <div className={ScreenFallbackStyles.container}>
-      <Image src='/logo-mark.png' alt='icon' width={150} height={150} />
+      <Image src='/logo-mark.svg' alt='icon' width={150} height={150} />
       <div>
         <p className={clsx(montserrat.className)}>
           © Dev Lab, {new Date().getFullYear()}

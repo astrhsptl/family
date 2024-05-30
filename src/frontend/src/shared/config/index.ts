@@ -1,1 +1,1 @@
-export const API_SERVER_URL = 'http://some.com/';
+export const API_SERVER_URL = 'https://api.labofdev.ru/api';

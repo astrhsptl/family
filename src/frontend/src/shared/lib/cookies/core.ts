@@ -1,7 +1,9 @@
+'use client';
+
 import { CredentialOptions } from './types';
 
-class CredentialStorage {
-  getCredential(key: string): string | null {
+class _Storage {
+  get(key: string): string | null {
     const matches = document.cookie.match(
       new RegExp(
         '(?:^|; )' +
@@ -11,7 +13,7 @@ class CredentialStorage {
     );
     return matches ? decodeURIComponent(matches[1]) : null;
   }
-  getCredentials() {
+  getAll() {
     const cookies = document.cookie
       .split('; ')
       .map((cookString) => cookString.split('='));
@@ -24,11 +26,7 @@ class CredentialStorage {
     return data;
   }
 
-  setCredential(
-    key: string,
-    value: string,
-    options: CredentialOptions = {}
-  ): void {
+  set(key: string, value: string, options: CredentialOptions = {}): void {
     let expiresDate = new Date();
     expiresDate.setDate(expiresDate.getDate() + 7);
 
@@ -56,20 +54,16 @@ class CredentialStorage {
     document.cookie = updatedCookie;
   }
 
-  removeCredential(key: string): void {
-    this.setCredential(key, '', {
+  delete(key: string): void {
+    this.set(key, '', {
       maxAge: -1,
     });
   }
 
   invalidate(): void {
-    const cookies = this.getCredentials();
-    console.log(cookies);
-
-    Object.keys(cookies).forEach((el) => {
-      this.removeCredential(el);
-    });
+    const cookies = this.getAll();
+    Object.keys(cookies).forEach((name) => this.delete(name));
   }
 }
 
-export const CSI = new CredentialStorage();
+export const CredentialStorage = new _Storage();

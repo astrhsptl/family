@@ -1,5 +1,3 @@
-'use client';
-
 import clsx from 'clsx';
 import Link, { LinkProps } from 'next/link';
 import { usePathname } from 'next/navigation';

@@ -38,6 +38,7 @@ export const Header: React.FC<HeaderProps> = () => {
         height={40}
         width={40}
         onClick={tools.open}
+        className={HeaderStyles.burgerMenu}
       />
       <NavBar tools={tools} />
     </header>

@@ -12,6 +12,10 @@
   height: $headerHeight;
 }
 
+.burgerMenu {
+  display: none;
+}
+
 .homeLinkBar {
   display: flex;
   align-items: center;
@@ -64,5 +68,9 @@
 @media (max-width: 700px) {
   .homeLinkBar {
     display: none;
+  }
+
+  .burgerMenu {
+    display: block;
   }
 }

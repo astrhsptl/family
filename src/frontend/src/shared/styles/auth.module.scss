@@ -1,0 +1,38 @@
+@import './base.module.scss';
+
+$defaultGap: 24px;
+
+.authSection {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+
+  width: 100%;
+
+  padding-top: 32px;
+}
+
+.authLogoMark {
+  margin-bottom: $defaultGap * 2;
+}
+
+.authForm {
+  @include flexCenterColumn();
+  gap: $defaultGap;
+
+  width: 100%;
+  min-width: 300px;
+
+  margin-bottom: $defaultGap;
+}
+
+.authTitle {
+  @include font(32px, 700);
+
+  margin-bottom: $defaultGap;
+}
+
+.authLink {
+  @include baseLink();
+  color: var(--c-red);
+}

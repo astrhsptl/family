@@ -8,3 +8,7 @@ export type PaginatedResult<T> = {
 export interface EntityId {
   id: string | number;
 }
+
+export interface WrongResponse {
+  data: null;
+}

@@ -143,6 +143,14 @@ q:after {
   content: none;
 }
 
+input:-webkit-autofill,
+input:focus:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 100px #fff inset;
+  color: var(--c-dark-gray);
+  font-size: 22px;
+  font-weight: 700;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;

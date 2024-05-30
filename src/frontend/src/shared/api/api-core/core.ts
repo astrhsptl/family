@@ -1,7 +1,10 @@
-import { API_SERVER_URL } from '@/shared';
+import {
+  API_SERVER_URL,
+  CredentialStorage,
+  EntityId,
+  PaginatedResult,
+} from '@/shared';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { CSI } from '../credential-storage';
-import { EntityId, PaginatedResult } from './types';
 
 const DefaultTriesCount = 2;
 
@@ -103,8 +106,7 @@ export class APITemplate<FetchType, RequestType> {
   }
 
   private setAuthenticationHeader(RequestConfig: AxiosRequestConfig) {
-    const tokenValue = CSI.getCredential('access');
-    const headerValue = `Bearer ${tokenValue}`;
+    const headerValue = `Bearer ${CredentialStorage.get('access')}`;
 
     if (!RequestConfig.headers) {
       RequestConfig['headers'] = {};
