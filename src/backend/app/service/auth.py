@@ -82,7 +82,7 @@ def check_auth(token: Annotated[str, Depends(OAUTH2_SCHEMA)]):
     if result.data.get("type") == _tlib.refresh_type:
         raise HTTPException(detail="Must be access token", status_code=401)
 
-    return AccessToken(access=result.data.get("sub"))
+    return AccessToken(access=token)
 
 
 auth_dependency = Depends(check_auth)

@@ -58,7 +58,7 @@ async def refresh(data: RefreshToken) -> AccessToken:
     response_model=UserRead,
 )
 async def user_by_token(token: AccessToken = auth_dependency) -> UserRead:
-    data = await service.user_by_token(AccessToken(access=token))
+    data = await service.user_by_token(token)
 
     if isinstance(data, (ErrorResponse,)):
         raise HTTPException(data.status_code, data.detail)

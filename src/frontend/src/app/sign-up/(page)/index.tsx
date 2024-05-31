@@ -1,11 +1,12 @@
 'use client';
 
 import { signUp } from '@/features';
-import { AuthStyles, DefaultButton, DefaultInput } from '@/shared';
+import { AuthStyles, DefaultButton, DefaultInput, ISignUp } from '@/shared';
 import { useEmailRegex } from '@/shared/lib/hooks/use-email-regex';
 import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler } from 'react-hook-form';
 
 export default function SignUpLayout() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function SignUpLayout() {
             </Link>
           </>
         }
-        submit={(data) => signUp(data, router)}
+        submit={((data) => signUp(data, router)) as SubmitHandler<ISignUp>}
       >
         <DefaultInput
           placeholder='First name'

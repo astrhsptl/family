@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function FamilyPage() {
   return (
     <>
-      <div>sosoosososos</div>
+      <div>aadfasdfasdfsfdddddd</div>
     </>
   );
 }

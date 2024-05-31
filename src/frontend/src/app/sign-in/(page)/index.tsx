@@ -6,6 +6,7 @@ import { useEmailRegex } from '@/shared/lib/hooks/use-email-regex';
 import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler } from 'react-hook-form';
 
 export default function SignInLayout() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function SignInLayout() {
             </Link>
           </>
         }
-        submit={(data: ISignIn) => signIn(data, router)}
+        submit={((data) => signIn(data, router)) as SubmitHandler<ISignIn>}
       >
         <DefaultInput
           placeholder='Email'
