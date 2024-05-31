@@ -1,8 +1,10 @@
 'use client';
 
+import { useSignIn } from '@/features/api-auth';
 import { AuthStyles, DefaultButton, DefaultInput } from '@/shared';
 import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 export default function SignInLayout() {
   return (
@@ -19,6 +21,7 @@ export default function SignInLayout() {
         }
         submit={(data) => {
           console.log(data);
+          useSignIn(data).finally(() => toast.success('asdf'));
         }}
       >
         <DefaultInput

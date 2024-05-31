@@ -1,5 +1,6 @@
 'use client';
 
+import { useSignUp } from '@/features/api-auth';
 import { AuthStyles, DefaultButton, DefaultInput } from '@/shared';
 import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
@@ -18,8 +19,9 @@ export default function SignUpLayout() {
             </Link>
           </>
         }
-        submit={() => {
-          console.log('some');
+        submit={(data) => {
+          console.log(data);
+          useSignUp(data);
         }}
       >
         <DefaultInput

@@ -2,11 +2,16 @@
 
 import { FC, ReactNode } from 'react';
 import StoreProvider from './store-provider';
+import ToastProvider from './toast-provider';
 
 interface RootProviderProps {
   children: ReactNode;
 }
 
 export const RootProvider: FC<RootProviderProps> = ({ children }) => {
-  return <StoreProvider>{children}</StoreProvider>;
+  return (
+    <StoreProvider>
+      <ToastProvider>{children}</ToastProvider>
+    </StoreProvider>
+  );
 };

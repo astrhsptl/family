@@ -140,3 +140,7 @@ $alert-index: 5;
   align-items: center;
   gap: 12px;
 }
+
+.toastStyles {
+  @include font(16px, 700);
+}

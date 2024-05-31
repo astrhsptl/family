@@ -37,7 +37,9 @@ class _Auth {
     data: ISignUp,
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<IUser> | WrongResponse> {
-    return await axios.post<IUser>(`${this.url}/sign-up`, data).catch(() => {
+    return await axios.post<IUser>(`${this.url}/sign-up`, data).catch((e) => {
+      console.log(e);
+
       if (tries === 0) {
         return { data: null };
       }
