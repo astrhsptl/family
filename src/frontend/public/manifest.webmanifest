@@ -1,10 +1,10 @@
 {
   "name": "Family Space",
-  "short_name": "FamilySpace",
+  "short_name": "Family Space",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fff",
-  "theme_color": "#FFFFFF",
+  "theme_color": "#fff",
   "description": "A simply readable Hacker News app.",
   "icons": [
     {
