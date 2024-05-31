@@ -4,6 +4,7 @@ import { HeaderStyles, NavLink } from '@/shared';
 import { useClientModalStatement } from '@/shared/lib/hooks/use-client-modal-statement';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import { headerMap } from './model';
 import { NavBar } from './ui';
@@ -11,10 +12,15 @@ import { NavBar } from './ui';
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
+  const pathname = usePathname();
   const tools = useClientModalStatement();
 
+  if (pathname.includes('family')) {
+    return <></>;
+  }
+
   return (
-    <header className={HeaderStyles.header}>
+    <header className={HeaderStyles.header} id='header'>
       <Image src={'/favicon.svg'} alt='icon' height={40} width={40} />
       <div className={HeaderStyles.homeLinkBar}>
         {Object.entries(headerMap).map(([name, link]) => (

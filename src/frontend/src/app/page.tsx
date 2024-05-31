@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'First page',
 };
 
-export default async function HomePage() {
+export default async function Page() {
   return (
     <>
       <HomepageLayout />

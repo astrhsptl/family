@@ -72,7 +72,9 @@ class _Auth {
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<IUser>> {
     return await axios
-      .get<IUser>(`${this.url}/user`, { headers: { Authorization: token } })
+      .get<IUser>(`${this.url}/user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .catch((e: AxiosError<WrongResponse>) => {
         return this._retry<string, ReturnType<typeof this.userByToken>>(
           this.userByToken,

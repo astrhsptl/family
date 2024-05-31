@@ -4,6 +4,6 @@ interface BaseTemplateProps {
   children: ReactNode;
 }
 
-export default function Template({ children }: BaseTemplateProps) {
+export default async function Template({ children }: BaseTemplateProps) {
   return <>{children}</>;
 }
