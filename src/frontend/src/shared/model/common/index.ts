@@ -10,5 +10,5 @@ export interface EntityId {
 }
 
 export interface WrongResponse {
-  data: null;
+  detail: string;
 }

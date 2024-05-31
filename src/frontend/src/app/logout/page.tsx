@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import LogoutLayout from './(page)';
 
 export const metadata: Metadata = {
   title: 'Logout | Family Space',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Logout() {
   return (
     <>
-      <div>logout</div>
+      <LogoutLayout />
     </>
   );
 }

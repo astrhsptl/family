@@ -30,27 +30,33 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
   } = useFormContext();
 
   return (
-    <div className={BaseStyle.defaultInputContainer}>
-      <div className={BaseStyle.inputImageContainer}>
-        {icon ? <Image src={icon} alt={name} height={24} width={24} /> : <></>}
-        <input
-          {...props}
-          {...register(name, registerOptions)}
-          className={BaseStyle.nestedInput}
-          onFocus={() => {
-            setIsActiveInput(true);
-          }}
-          onBlur={(e) => {
-            setIsActiveInput(false || e.target.value !== '');
-          }}
-          placeholder={placeholder}
-        />
+    <>
+      <div className={BaseStyle.defaultInputContainer}>
+        <div className={BaseStyle.inputImageContainer}>
+          {icon ? (
+            <Image src={icon} alt={name} height={24} width={24} />
+          ) : (
+            <></>
+          )}
+          <input
+            {...props}
+            {...register(name, registerOptions)}
+            className={BaseStyle.nestedInput}
+            onFocus={() => {
+              setIsActiveInput(true);
+            }}
+            onBlur={(e) => {
+              setIsActiveInput(false || e.target.value !== '');
+            }}
+            placeholder={placeholder}
+          />
+        </div>
       </div>
       <ErrorMessage
         errors={errors}
         name={name}
         render={({ message }) => <InputError message={message} />}
       />
-    </div>
+    </>
   );
 };

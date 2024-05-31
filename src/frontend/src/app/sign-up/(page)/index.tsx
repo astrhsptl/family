@@ -1,11 +1,16 @@
 'use client';
 
-import { useSignUp } from '@/features/api-auth';
+import { signUp } from '@/features';
 import { AuthStyles, DefaultButton, DefaultInput } from '@/shared';
+import { useEmailRegex } from '@/shared/lib/hooks/use-email-regex';
 import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpLayout() {
+  const router = useRouter();
+  const emailRegex = useEmailRegex();
+
   return (
     <>
       <AuthLayout
@@ -19,38 +24,63 @@ export default function SignUpLayout() {
             </Link>
           </>
         }
-        submit={(data) => {
-          console.log(data);
-          useSignUp(data);
-        }}
+        submit={(data) => signUp(data, router)}
       >
         <DefaultInput
           placeholder='First name'
           name='first_name'
           type='text'
           icon='/user.svg'
-          registerOptions={{}}
+          registerOptions={{
+            required: {
+              message: 'First name are required',
+              value: true,
+            },
+          }}
         />
         <DefaultInput
           placeholder='Last name'
           name='last_name'
           type='text'
           icon='/user.svg'
-          registerOptions={{}}
+          registerOptions={{
+            required: {
+              message: 'Last name are required',
+              value: true,
+            },
+          }}
         />
         <DefaultInput
           placeholder='Email'
           name='email'
           type='email'
           icon='/mail.svg'
-          registerOptions={{}}
+          registerOptions={{
+            required: {
+              message: 'Email are required',
+              value: true,
+            },
+            pattern: {
+              message: 'Invalid email',
+              value: emailRegex,
+            },
+          }}
         />
         <DefaultInput
           placeholder='Password'
           name='password'
           type='password'
           icon='/lock.svg'
-          registerOptions={{}}
+          registerOptions={{
+            required: {
+              message: 'Password are required',
+              value: true,
+            },
+            minLength: {
+              message: 'Minimal length 8',
+              value: 8,
+            },
+          }}
         />
         <DefaultButton>Sign up</DefaultButton>
       </AuthLayout>
