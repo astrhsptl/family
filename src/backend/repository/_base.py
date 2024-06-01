@@ -6,9 +6,12 @@ from domain.structures import ResultData
 from sqlalchemy import Select, delete, func, select
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
+from ._exception_handler import RepositoryExceptionHandler
+
 
 class BaseRepository:
     model: Model
+    _handler = RepositoryExceptionHandler()
 
     async def get_all(
         self, page: int = 1, quantity: int = 50, order_by: str | None = None
@@ -62,6 +65,11 @@ class BaseRepository:
                 await session.refresh(entity)
                 return result.set_result(entity)
         except IntegrityError as e:
+            handled_string = self._handler.validate(str(e.orig), data)
+
+            if handled_string:
+                return result.set_error(400, handled_string)
+
             return result.set_error(400, (str(e)))
         except DBAPIError:
             return result.set_error(500, "Database Error")
