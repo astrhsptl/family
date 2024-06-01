@@ -1,5 +1,5 @@
+import { SignInLayout } from '@/widgets';
 import { Metadata } from 'next';
-import SignInLayout from './(page)';
 
 export const metadata: Metadata = {
   title: 'Sign in | Family Space',

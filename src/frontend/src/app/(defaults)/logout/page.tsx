@@ -1,5 +1,5 @@
+import { LogoutLayout } from '@/widgets';
 import { Metadata } from 'next';
-import LogoutLayout from './(page)';
 
 export const metadata: Metadata = {
   title: 'Logout | Family Space',

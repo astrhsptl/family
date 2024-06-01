@@ -1,56 +1,31 @@
 'use client';
 
-import { signUp } from '@/features';
-import { AuthStyles, DefaultButton, DefaultInput, ISignUp } from '@/shared';
+import { signIn } from '@/features';
+import { AuthStyles, DefaultButton, DefaultInput, ISignIn } from '@/shared';
 import { useEmailRegex } from '@/shared/lib/hooks/use-email-regex';
-import { AuthLayout } from '@/widgets';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler } from 'react-hook-form';
+import { AuthLayout } from './ui';
 
-export default function SignUpLayout() {
+export function SignInLayout() {
   const router = useRouter();
   const emailRegex = useEmailRegex();
 
   return (
     <>
       <AuthLayout
-        title='Sign up'
+        title='Login'
         description={
           <>
-            Already have account?
-            <Link href={'/sign-in'} className={AuthStyles.authLink}>
-              {' '}
-              Go here
+            You are new?{' '}
+            <Link href={'/sign-up'} className={AuthStyles.authLink}>
+              Create new
             </Link>
           </>
         }
-        submit={((data) => signUp(data, router)) as SubmitHandler<ISignUp>}
+        submit={((data) => signIn(data, router)) as SubmitHandler<ISignIn>}
       >
-        <DefaultInput
-          placeholder='First name'
-          name='first_name'
-          type='text'
-          icon='/user.svg'
-          registerOptions={{
-            required: {
-              message: 'First name are required',
-              value: true,
-            },
-          }}
-        />
-        <DefaultInput
-          placeholder='Last name'
-          name='last_name'
-          type='text'
-          icon='/user.svg'
-          registerOptions={{
-            required: {
-              message: 'Last name are required',
-              value: true,
-            },
-          }}
-        />
         <DefaultInput
           placeholder='Email'
           name='email'
@@ -83,7 +58,7 @@ export default function SignUpLayout() {
             },
           }}
         />
-        <DefaultButton>Sign up</DefaultButton>
+        <DefaultButton>Sign in</DefaultButton>
       </AuthLayout>
     </>
   );

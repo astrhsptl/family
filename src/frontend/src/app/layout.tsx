@@ -1,6 +1,5 @@
 import { RootProvider } from '@/features';
 import '@/shared/styles/base.css';
-import { Header } from '@/widgets';
 import { Metadata } from 'next';
 
 interface RootLayoutProps {
@@ -21,10 +20,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <main>
-          <RootProvider>
-            <Header />
-            {children}
-          </RootProvider>
+          <RootProvider>{children}</RootProvider>
         </main>
       </body>
     </html>

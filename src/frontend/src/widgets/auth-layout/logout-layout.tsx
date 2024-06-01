@@ -2,10 +2,10 @@
 
 import { logout } from '@/features';
 import { DefaultButton } from '@/shared';
-import { AuthLayout } from '@/widgets';
 import { useRouter } from 'next/navigation';
+import { AuthLayout } from './ui';
 
-export default function LogoutLayout() {
+export function LogoutLayout() {
   const router = useRouter();
 
   return (

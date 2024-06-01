@@ -1,5 +1,5 @@
+import { SignUpLayout } from '@/widgets';
 import { Metadata } from 'next';
-import SignUpLayout from './(page)';
 
 export const metadata: Metadata = {
   title: 'Sign up | Family Space',
