@@ -32,7 +32,7 @@ class BaseService:
     async def get_by_id(self, id: str | UUID):
         result = await self._repository.get_by_condition(id=id)
 
-        if result.detail:
+        if not result.data:
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
 
         return self._data_serializer.model_validate(result.data)
@@ -76,5 +76,5 @@ class BaseService:
         pages = ceil(count / quantity)
 
         return PaginatedResponse[self._data_serializer](
-            data, next_page, prev_page, pages
+            data=data, next_page=next_page, previous_page=prev_page, pages=pages
         )

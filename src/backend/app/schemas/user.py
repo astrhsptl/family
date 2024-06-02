@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from ._base import Model
 
@@ -13,7 +13,7 @@ class UserRead(Model):
     family_id: UUID | None
 
 
-class UserCreate(Model):
+class UserCreate(BaseModel):
     first_name: str
     last_name: str
     email: str
@@ -21,7 +21,7 @@ class UserCreate(Model):
     family_id: UUID | None = Field(None)
 
 
-class UserUpdate(Model):
+class UserUpdate(BaseModel):
     first_name: str | None = Field(None)
     last_name: str | None = Field(None)
     email: str | None = Field(None)

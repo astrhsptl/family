@@ -1,7 +1,7 @@
 'use client';
 
 import { FormBaseLayout } from '@/features';
-import { AuthStyles, montserrat } from '@/shared';
+import { AuthStyles, BaseStyle, montserrat } from '@/shared';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { ReactNode } from 'react';
@@ -35,7 +35,7 @@ export const AuthLayout = ({
       <FormBaseLayout
         onSub={submit}
         methods={methods}
-        className={AuthStyles.authForm}
+        className={BaseStyle.baseForm}
       >
         {children}
       </FormBaseLayout>

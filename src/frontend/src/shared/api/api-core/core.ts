@@ -8,10 +8,10 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 const DefaultTriesCount = 2;
 
-export class APITemplate<FetchType, RequestType> {
+export class APICore<FetchType, RequestType> {
   private url;
   constructor(url: string) {
-    this.url = `${API_SERVER_URL}/api/${url}/`;
+    this.url = `${API_SERVER_URL}/v1/${url}/`;
   }
 
   async fetchAll(

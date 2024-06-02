@@ -3,7 +3,7 @@ from uuid import UUID
 from domain.database import SESSION
 from domain.models._base import Model
 from domain.structures import ResultData
-from sqlalchemy import Select, delete, func, select
+from sqlalchemy import Select, delete, func, select, update
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from ._exception_handler import RepositoryExceptionHandler
@@ -48,6 +48,10 @@ class BaseRepository:
         try:
             async with SESSION() as session:
                 data = await session.scalar(statement)
+
+                if not data:
+                    return result.set_error(404, "Entity not found")
+
                 return result.set_result(data)
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
@@ -75,20 +79,20 @@ class BaseRepository:
             return result.set_error(500, "Database Error")
 
     async def update(self, id: str | UUID, data: dict) -> ResultData[Model]:
+        if len(data.keys()) == 0:
+            return await self.get_by_condition(id=str(id))
+
         result = ResultData[Model]()
-        entity = await self.get_by_id(id)
-
-        if not entity.data:
-            return result.set_error(404, "Entity not found")
-
         try:
             async with SESSION() as session:
-                for attr_name, attr_value in data.items():
-                    setattr(entity.data, attr_name, attr_value)
-
-                await session.commit()
-                await session.refresh(entity)
-                return result.set_result(entity.data)
+                statement = (
+                    update(self.model)
+                    .values(**data)
+                    .where(self.model.id == str(id))
+                    .returning(self.model)
+                )
+                entity = (await session.execute(statement)).unique().scalar()
+                return result.set_result(self.model(**entity.as_dict()))
         except IntegrityError as e:
             return result.set_error(400, (str(e)))
         except DBAPIError:

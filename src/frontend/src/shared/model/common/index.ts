@@ -5,9 +5,7 @@ export type PaginatedResult<T> = {
   data: T[];
 };
 
-export interface EntityId {
-  id: string | number;
-}
+export type EntityId = string | number;
 
 export interface WrongResponse {
   detail: string;

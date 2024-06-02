@@ -1,3 +1,5 @@
+'use server';
+
 import { AuthApiCore } from '@/shared';
 import { cookies } from 'next/headers';
 

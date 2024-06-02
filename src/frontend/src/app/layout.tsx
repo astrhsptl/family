@@ -15,7 +15,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang='en'>
       <head>
         <link rel='manifest' href='/manifest.webmanifest' />
-        <link rel='apple-touch-icon' href='/favicon.svg'></link>
+        <link rel='apple-touch-icon' href='/favicon.svg' />
         <meta name='theme-color' content='#fff' />
       </head>
       <body>

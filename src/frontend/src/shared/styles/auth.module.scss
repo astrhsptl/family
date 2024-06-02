@@ -1,7 +1,5 @@
 @import './base.module.scss';
 
-$defaultGap: 24px;
-
 .authSection {
   display: grid;
   justify-content: center;
@@ -16,16 +14,6 @@ $defaultGap: 24px;
   margin-bottom: $defaultGap * 2;
 }
 
-.authForm {
-  @include flexCenterColumn();
-  gap: $defaultGap;
-
-  width: 100%;
-  min-width: 300px;
-
-  margin-bottom: $defaultGap;
-}
-
 .authTitle {
   @include font(32px, 700);
 
@@ -35,4 +23,10 @@ $defaultGap: 24px;
 .authLink {
   @include baseLink();
   color: var(--c-red);
+}
+
+@media (max-width: 700px) {
+  .authLogoMark {
+    margin-bottom: $defaultGap / 2;
+  }
 }

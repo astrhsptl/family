@@ -1,3 +1,6 @@
+/*  */
+$defaultGap: 24px;
+
 /* sizes */
 $headerHeight: 60px;
 
@@ -99,6 +102,15 @@ $alert-index: 5;
   max-width: 300px;
 
   cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+
+  &:focus,
+  &:hover {
+    background-color: var(--c-white);
+    border: 1px solid var(--c-dark-gray);
+    color: var(--c-dark-gray);
+  }
 }
 
 .baseModalBackground {
@@ -143,4 +155,24 @@ $alert-index: 5;
 
 .toastStyles {
   @include font(16px, 700);
+}
+
+.inputError {
+  @include flex();
+  @include font(12px, 700, 12px, var(--c-red));
+
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding-left: 14px;
+}
+
+.baseForm {
+  @include flexCenterColumn();
+  gap: $defaultGap;
+
+  width: 100%;
+  min-width: 300px;
+
+  margin-bottom: $defaultGap;
 }

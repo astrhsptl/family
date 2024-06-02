@@ -30,7 +30,7 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
   } = useFormContext();
 
   return (
-    <>
+    <div>
       <div className={BaseStyle.defaultInputContainer}>
         <div className={BaseStyle.inputImageContainer}>
           {icon ? (
@@ -57,6 +57,6 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
         name={name}
         render={({ message }) => <InputError message={message} />}
       />
-    </>
+    </div>
   );
 };

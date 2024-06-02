@@ -1,6 +1,7 @@
 from uuid import UUID
 
 from app.service._base import BaseService
+from domain.structures import unique_paginated_model
 from domain.structures.paginated_result import ErrorResponse, SuccessResponse
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
@@ -27,19 +28,19 @@ class Controller:
         async def __create(data: self.create_model):
             return await self.__create(data.model_dump(exclude_unset=True))
 
-        async def __update(id: UUID, data: self.update_model):
-            return await self.__update(id, data.model_dump(exclude_unset=True))
+        async def __update(entity_id: UUID, data: self.update_model):
+            return await self.__update(entity_id, data.model_dump(exclude_unset=True))
 
         self.controller.add_api_route(
             "/",
             self.__get,
             methods=["GET"],
-            response_model=self.read_model,
+            response_model=unique_paginated_model(self.read_model),
             operation_id=f"get_{self.operation_id}",
             dependencies=self.dependencies,
         )
         self.controller.add_api_route(
-            "/{entity_id:uuid}/",
+            "/{entity_id}/",
             self.__get_by_id,
             methods=["GET"],
             response_model=self.read_model,
@@ -53,14 +54,14 @@ class Controller:
             operation_id=f"create_{self.operation_id}",
         )
         self.controller.add_api_route(
-            "/{entity_id:uuid}/",
+            "/{entity_id}/",
             __update,
             methods=["PATCH"],
             response_model=self.read_model,
             operation_id=f"update_{self.operation_id}",
         )
         self.controller.add_api_route(
-            "/{entity_id:uuid}/",
+            "/{entity_id}/",
             self.__delete,
             methods=["DELETE"],
             response_model=None,

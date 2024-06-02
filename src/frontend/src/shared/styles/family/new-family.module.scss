@@ -1,0 +1,13 @@
+@import '../base.module.scss';
+
+.familyLayout {
+  @include flexCenterColumn();
+  justify-content: center;
+
+  height: calc(100dvh - $headerHeight);
+}
+
+.title {
+  @include font(32px, 700, 32px, var(--c-dark-gray));
+  margin-bottom: 2 * $defaultGap;
+}

@@ -1,6 +1,6 @@
 import { EntityId } from '../common';
 
-export interface IUserCreate {
+export interface UserCreate {
   first_name: string;
   last_name: string;
   email: string;
@@ -8,6 +8,8 @@ export interface IUserCreate {
   family_id?: string;
 }
 
-export type IUserUpdate = Partial<IUserCreate>;
+export type IUserUpdate = Partial<UserCreate>;
 
-export interface IUser extends IUserCreate, EntityId {}
+export interface User extends UserCreate {
+  id: EntityId;
+}

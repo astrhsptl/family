@@ -1,5 +1,7 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
+import { BaseStyle, montserrat } from '../styles';
 
 interface InputErrorProps {
   message: string;
@@ -7,8 +9,8 @@ interface InputErrorProps {
 
 export const InputError: React.FC<InputErrorProps> = ({ message }) => {
   return (
-    <div>
-      <Image height={14} width={14} src='/message-alert.svg' alt='Alert' />
+    <div className={clsx(BaseStyle.inputError, montserrat.className)}>
+      <Image height={12} width={12} src='/message-alert.svg' alt='Alert' />
       {message}
     </div>
   );
