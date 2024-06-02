@@ -92,6 +92,8 @@ class BaseRepository:
                     .returning(self.model)
                 )
                 entity = (await session.execute(statement)).unique().scalar()
+                await session.commit()
+                await session.refresh(entity)
                 return result.set_result(self.model(**entity.as_dict()))
         except IntegrityError as e:
             return result.set_error(400, (str(e)))

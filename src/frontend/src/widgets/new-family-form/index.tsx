@@ -10,6 +10,7 @@ import {
   montserrat,
 } from '@/shared';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Family {
@@ -17,8 +18,10 @@ interface Family {
 }
 
 export const NewFamilyLayout = () => {
+  const router = useRouter();
+
   const submitHandler: SubmitHandler<Family> = (data) => {
-    createFamily(data);
+    createFamily(data, router);
   };
   const methods = useForm<Family>();
 

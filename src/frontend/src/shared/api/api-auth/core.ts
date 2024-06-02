@@ -3,8 +3,8 @@ import {
   IRefreshToken,
   ISignIn,
   ISignUp,
-  IUser,
   TokenPair,
+  User,
   WrongResponse,
 } from '@/shared';
 import { API_SERVER_URL } from '@/shared/config';
@@ -38,9 +38,9 @@ class _Auth {
   async signUp(
     data: ISignUp,
     tries = DefaultTriesCount
-  ): Promise<AxiosResponse<IUser>> {
+  ): Promise<AxiosResponse<User>> {
     return await axios
-      .post<IUser>(`${this.url}/sign-up`, data)
+      .post<User>(`${this.url}/sign-up`, data)
       .catch((e: AxiosError<WrongResponse>) => {
         return this._retry<ISignUp, ReturnType<typeof this.signUp>>(
           this.signUp,
@@ -70,9 +70,9 @@ class _Auth {
   async userByToken(
     token: string,
     tries = DefaultTriesCount
-  ): Promise<AxiosResponse<IUser>> {
+  ): Promise<AxiosResponse<User>> {
     return await axios
-      .get<IUser>(`${this.url}/user`, {
+      .get<User>(`${this.url}/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .catch((e: AxiosError<WrongResponse>) => {

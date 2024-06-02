@@ -1,16 +1,19 @@
 import { CredentialStorage, FamilyCreate, parseJwt } from '@/shared';
-import { redirect } from 'next/navigation';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import toast from 'react-hot-toast';
 import { familyRequests, userRequests } from '../requests';
 
-export const createFamily = async (data: FamilyCreate) => {
+export const createFamily = async (
+  data: FamilyCreate,
+  router: AppRouterInstance
+) => {
   const token = CredentialStorage.get('access');
 
   if (!token) {
-    redirect('/sign-in');
+    return router.push('/sign-in');
   }
-  const payload = parseJwt(token);
 
+  const payload = parseJwt(token);
   const family = await familyRequests.create(data).catch((e) => {
     toast.error(e);
     return null;
@@ -21,12 +24,12 @@ export const createFamily = async (data: FamilyCreate) => {
   }
 
   userRequests.update(payload.sub, {
-    family_id: family.data.last_name,
+    family_id: family.data.id as string,
   });
 
   toast.success('Your family created');
 
   setTimeout(() => {
-    redirect('/family');
+    router.push('/family');
   }, 500);
 };

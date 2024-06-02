@@ -84,8 +84,8 @@ class Controller:
             order_by=order_by,
         )
 
-    async def __get_by_id(self, id: UUID):
-        data = await self.service.get_by_id(id=id)
+    async def __get_by_id(self, entity_id: UUID):
+        data = await self.service.get_by_id(id=entity_id)
 
         if isinstance(data, (ErrorResponse,)):
             raise HTTPException(data.status_code, data.detail)
@@ -108,8 +108,8 @@ class Controller:
 
         return data
 
-    async def __delete(self, id: UUID) -> SuccessResponse:
-        data = await self.service.delete(id=id)
+    async def __delete(self, entity_id: UUID) -> SuccessResponse:
+        data = await self.service.delete(id=entity_id)
 
         if isinstance(data, (ErrorResponse,)):
             raise HTTPException(data.status_code, data.detail)

@@ -14,6 +14,8 @@ export default async function AuthTemplate({ children }: AuthTemplateProps) {
     return redirect('/sign-in');
   }
 
+  console.log(user.data);
+
   if (!user.data.family_id) {
     return redirect('/family/new');
   }
