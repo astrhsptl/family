@@ -1,17 +1,15 @@
-'use server';
+'use client';
 
-import { AuthApiCore } from '@/shared';
-import { cookies } from 'next/headers';
+import { AuthApiCore, CredentialStorage } from '@/shared';
 
 export const checkAuth = async () => {
-  const storage = cookies();
   const checkUserByToken = async (token: string) => {
     const user = await AuthApiCore.userByToken(token).catch(() => null);
     return user;
   };
 
-  const access = storage.get('access');
-  const refresh = storage.get('refresh');
+  const access = CredentialStorage.get('access');
+  const refresh = CredentialStorage.get('refresh');
 
   if ((!access && !refresh) || !refresh) {
     return null;
@@ -19,17 +17,17 @@ export const checkAuth = async () => {
 
   if (!access) {
     const newAccess = await AuthApiCore.refresh({
-      refresh: refresh.value,
+      refresh: refresh,
     }).catch(() => null);
 
     if (newAccess === null) {
       return null;
     }
 
-    storage.set('access', newAccess.data.access);
+    CredentialStorage.set('access', newAccess.data.access);
 
     return await checkUserByToken(newAccess.data.access);
   }
 
-  return await checkUserByToken(access.value);
+  return await checkUserByToken(access);
 };

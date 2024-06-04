@@ -1,6 +1,6 @@
 'use client';
 
-import { FormBaseLayout } from '@/features';
+import { FormBaseLayout, useAppDispatch } from '@/features';
 import { createFamily } from '@/features/new-family';
 import {
   BaseStyle,
@@ -19,9 +19,10 @@ interface Family {
 
 export const NewFamilyLayout = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const submitHandler: SubmitHandler<Family> = (data) => {
-    createFamily(data, router);
+    createFamily(data, router, dispatch);
   };
   const methods = useForm<Family>();
 

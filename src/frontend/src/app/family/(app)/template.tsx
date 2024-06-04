@@ -1,23 +1,36 @@
-'use server';
+'use client';
 
-import { checkAuth } from '@/features';
-import { redirect } from 'next/navigation';
+import { setFamily, setUser } from '@/entities';
+import { checkAuth, useAppDispatch } from '@/features';
+import { familyRequests } from '@/features/requests';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface AuthTemplateProps {
   children: React.ReactNode;
 }
 
-export default async function AuthTemplate({ children }: AuthTemplateProps) {
-  const user = await checkAuth();
+export default function AuthTemplate({ children }: AuthTemplateProps) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  if (!user) {
-    return redirect('/sign-in');
-  }
+  useEffect(() => {
+    checkAuth().then((user) => {
+      if (!user) {
+        return router.push('/sign-in');
+      }
+      if (!user.data.family_id) {
+        return router.push('/family/new');
+      }
+      familyRequests
+        .fetchByID(user.data.family_id)
+        .then(({ data }) => {
+          dispatch(setFamily(data));
+        })
+        .catch(() => null);
+      dispatch(setUser(user.data));
+    });
+  }, []);
 
-  console.log(user.data);
-
-  if (!user.data.family_id) {
-    return redirect('/family/new');
-  }
   return <>{children}</>;
 }

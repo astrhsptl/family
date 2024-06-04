@@ -1,4 +1,4 @@
-import { NavigationPanel } from '@/widgets/navigation-panel';
+import { NavigationPanel } from '@/widgets';
 
 interface LayoutProps {
   children: React.ReactNode;

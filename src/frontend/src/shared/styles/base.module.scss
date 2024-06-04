@@ -113,6 +113,20 @@ $alert-index: 5;
   }
 }
 
+.backButton {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+
+  border: 2px solid var(--c-black);
+  border-radius: 50%;
+
+  background-color: var(--c-white);
+
+  width: 40px;
+  height: 40px;
+}
+
 .baseModalBackground {
   @include baseModal();
 
@@ -175,4 +189,11 @@ $alert-index: 5;
   min-width: 300px;
 
   margin-bottom: $defaultGap;
+}
+
+.checkbox {
+  height: 24px;
+  width: 24px;
+
+  border-radius: 8px;
 }

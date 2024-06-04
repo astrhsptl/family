@@ -1,3 +1,4 @@
+import { FamilyHeader } from '@/widgets';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <div></div>;
+  return (
+    <>
+      <FamilyHeader />
+    </>
+  );
 }

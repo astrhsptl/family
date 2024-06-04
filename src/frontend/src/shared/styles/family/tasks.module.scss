@@ -1,0 +1,46 @@
+@import '../base.module.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.taskPage {
+  padding: 5%;
+}
+
+.title {
+  @include font(28px, 700, 28px, var(--c-black));
+}
+
+.taskList {
+  margin-top: 18px;
+}
+
+.taskRow {
+  display: grid;
+  grid-template-columns: 32px auto;
+  align-items: center;
+  align-content: center;
+  gap: 10px;
+
+  padding: 18px 0;
+}
+
+.taskText {
+  @include font(16px, 700);
+  border: none;
+  outline: none;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.placeholder {
+  color: var(--c-light-gray);
+}

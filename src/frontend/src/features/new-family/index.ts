@@ -1,3 +1,4 @@
+import { AppDispatch, setFamily } from '@/entities';
 import { CredentialStorage, FamilyCreate, parseJwt } from '@/shared';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import toast from 'react-hot-toast';
@@ -5,7 +6,8 @@ import { familyRequests, userRequests } from '../requests';
 
 export const createFamily = async (
   data: FamilyCreate,
-  router: AppRouterInstance
+  router: AppRouterInstance,
+  dispatch: AppDispatch
 ) => {
   const token = CredentialStorage.get('access');
 
@@ -28,6 +30,7 @@ export const createFamily = async (
   });
 
   toast.success('Your family created');
+  dispatch(setFamily(family.data));
 
   setTimeout(() => {
     router.push('/family');
