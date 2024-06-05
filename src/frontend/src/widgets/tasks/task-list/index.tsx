@@ -1,24 +1,18 @@
 'use client';
 
-import { taskRequests } from '@/features/requests';
 import { TaskStyles } from '@/shared';
-import { useQuery } from '@tanstack/react-query';
+import { Task } from '@/shared/model/types/task';
 import { TaskRow } from './ui';
+import { createdTask } from './ui/created-task';
 
-interface TaskListProps {}
+interface TaskListProps {
+  tasks: Task[];
+}
 
-export const TaskList = ({}: TaskListProps) => {
-  const { data } = useQuery({
-    queryFn: async () => taskRequests.fetchAll().then((r) => r.data.data),
-    queryKey: ['tasks'],
-  });
-
+export const TaskList = ({ tasks }: TaskListProps) => {
   return (
     <section className={TaskStyles.taskList}>
-      {data?.map((task, index) => (
-        <TaskRow key={index} title={task.title} />
-      ))}
-      <TaskRow />
+      {tasks?.map((task) => createdTask(task, TaskRow))}
     </section>
   );
 };
