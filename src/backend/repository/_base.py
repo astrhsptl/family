@@ -75,7 +75,8 @@ class BaseRepository:
                 return result.set_error(400, handled_string)
 
             return result.set_error(400, (str(e)))
-        except DBAPIError:
+        except DBAPIError as e:
+            print(e)
             return result.set_error(500, "Database Error")
 
     async def update(self, id: str | UUID, data: dict) -> ResultData[Model]:
