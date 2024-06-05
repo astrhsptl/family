@@ -2,8 +2,7 @@
 
 import { TaskStyles } from '@/shared';
 import { Task } from '@/shared/model/types/task';
-import { TaskRow } from './ui';
-import { createdTask } from './ui/created-task';
+import { CreatedTask } from './ui';
 
 interface TaskListProps {
   tasks: Task[];
@@ -12,7 +11,9 @@ interface TaskListProps {
 export const TaskList = ({ tasks }: TaskListProps) => {
   return (
     <section className={TaskStyles.taskList}>
-      {tasks?.map((task) => createdTask(task, TaskRow))}
+      {tasks?.map((task) => (
+        <CreatedTask key={task.id} task={task} />
+      ))}
     </section>
   );
 };

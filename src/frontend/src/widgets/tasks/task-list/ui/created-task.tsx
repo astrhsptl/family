@@ -1,16 +1,15 @@
 'use client';
 
+import { TaskRow } from '@/features';
 import { taskRequests } from '@/features/requests';
 import { Task, useDebounceValue } from '@/shared';
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export const createdTask = (
-  task: Task,
-  Component: FC<{
-    title: string;
-    setTitle: Dispatch<SetStateAction<string>>;
-  }>
-) => {
+interface CreatedTaskProps {
+  task: Task;
+}
+
+export const CreatedTask = ({ task }: CreatedTaskProps) => {
   const [title, setTitle] = useState(task.title);
   const updatedTitle = useDebounceValue(title);
 
@@ -20,5 +19,5 @@ export const createdTask = (
     }
   }, [updatedTitle]);
 
-  return <Component key={task.id} title={title} setTitle={setTitle} />;
+  return <TaskRow key={task.id} title={title} setTitle={setTitle} />;
 };
