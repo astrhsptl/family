@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from ._base import Model
 
@@ -14,7 +14,7 @@ class TaskRead(Model):
     event_id: UUID | None
 
 
-class TaskCreate(Model):
+class TaskCreate(BaseModel):
     title: str
     description: str | None
     date: int
@@ -23,10 +23,10 @@ class TaskCreate(Model):
     event_id: UUID | None
 
 
-class TaskUpdate(Model):
+class TaskUpdate(BaseModel):
     title: str | None = Field(None)
     description: str | None = Field(None)
-    date: int  | None = Field(None)
+    date: int | None = Field(None)
     user_id: UUID | None = Field(None)
     family_id: UUID | None = Field(None)
     event_id: UUID | None = Field(None)

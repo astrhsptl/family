@@ -8,9 +8,7 @@ export default async function TaskPage({}: TaskProps) {
   return (
     <div className={clsx(TaskStyles.taskPage, montserrat.className)}>
       <TaskHeader />
-      <section>
-        <TaskList />
-      </section>
+      <TaskList />
     </div>
   );
 }
