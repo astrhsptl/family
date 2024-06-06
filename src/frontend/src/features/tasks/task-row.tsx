@@ -21,15 +21,27 @@ export const TaskRow = ({
 }: TaskRowProps) => {
   const [placeholderToggle, setPlaceholderToggle] = useState(title !== '');
   const [deleteFlag, setDeleteFlag] = useState(title === '');
-  const [isFinished, setIsFinished] = useState(!task ? false : task.finished);
+  const [isFinished, setIsFinished] = useState(
+    !task ? false : task.is_finished
+  );
   const router = useRouter();
 
   return (
     <div className={TaskStyles.taskRow} {...divProps}>
       <DefaultCheckbox
         disabled={!placeholderToggle}
-        onChange={(e) => {
+        checked={isFinished}
+        onChange={() => {
+          if (!task) {
+            return;
+          }
           setIsFinished(!isFinished);
+          return taskRequests
+            .update(task.id, { is_finished: isFinished })
+            .then((r) => {
+              toast.success(isFinished ? 'Closed' : 'Opened');
+              router.refresh();
+            });
         }}
       />
       <input
@@ -40,7 +52,11 @@ export const TaskRow = ({
           setTitle(() => e.target.value);
         }}
         placeholder='Type to add'
-        className={clsx(TaskStyles.taskText, montserrat.className)}
+        className={clsx(
+          TaskStyles.taskText,
+          montserrat.className,
+          isFinished ? TaskStyles.finished : ''
+        )}
         onFocusCapture={() => {
           setPlaceholderToggle(true);
         }}

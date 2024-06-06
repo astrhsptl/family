@@ -3,7 +3,7 @@ import { EntityId } from '../common';
 export interface TaskCreate {
   title: string;
   description?: string;
-  finished?: boolean;
+  is_finished?: boolean;
   created_date?: string;
   finish_date?: string;
   user_id?: string;
