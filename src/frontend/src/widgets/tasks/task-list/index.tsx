@@ -10,7 +10,11 @@ interface TaskListProps {}
 
 export const TaskList = async ({}: TaskListProps) => {
   const tasks = await axios
-    .get<PaginatedResult<Task>>(`${API_SERVER_URL}/v1/task/`)
+    .get<PaginatedResult<Task>>(`${API_SERVER_URL}/v1/task/`, {
+      params: {
+        order_by: 'created_date',
+      },
+    })
     .then((r) => r.data.data);
 
   return (

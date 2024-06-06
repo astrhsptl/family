@@ -1,6 +1,6 @@
 'use client';
 
-import { DefaultCheckbox, EntityId, montserrat, TaskStyles } from '@/shared';
+import { DefaultCheckbox, montserrat, Task, TaskStyles } from '@/shared';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -8,19 +8,30 @@ import toast from 'react-hot-toast';
 import { taskRequests } from '../requests';
 
 type TaskRowProps = {
-  id: EntityId;
+  task?: Task;
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
-} & JSX.IntrinsicElements['div'];
+};
 
-export const TaskRow = ({ id, title, setTitle, ...divProps }: TaskRowProps) => {
-  const [placeholderToggle, setPlaceholderToggle] = useState(false);
+export const TaskRow = ({
+  task,
+  title,
+  setTitle,
+  ...divProps
+}: TaskRowProps) => {
+  const [placeholderToggle, setPlaceholderToggle] = useState(title !== '');
   const [deleteFlag, setDeleteFlag] = useState(title === '');
+  const [isFinished, setIsFinished] = useState(!task ? false : task.finished);
   const router = useRouter();
 
   return (
     <div className={TaskStyles.taskRow} {...divProps}>
-      <DefaultCheckbox disabled={!placeholderToggle} />
+      <DefaultCheckbox
+        disabled={!placeholderToggle}
+        onChange={(e) => {
+          setIsFinished(!isFinished);
+        }}
+      />
       <input
         onChange={(e) => {
           if (e.target.value !== '') {
@@ -38,12 +49,16 @@ export const TaskRow = ({ id, title, setTitle, ...divProps }: TaskRowProps) => {
         }}
         value={title}
         onKeyUp={({ key }) => {
-          if (id === 'unique') {
+          if (!task) {
+            return;
+          }
+
+          if (task.id === 'unique') {
             return;
           }
 
           if (key === 'Backspace' && title === '' && deleteFlag) {
-            return taskRequests.remove(id).then((r) => {
+            return taskRequests.remove(task.id).then((r) => {
               toast.success('Successful delete');
               router.refresh();
             });

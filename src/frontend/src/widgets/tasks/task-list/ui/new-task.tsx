@@ -11,7 +11,7 @@ interface NewTaskProps {}
 
 export const NewTask = ({}: NewTaskProps) => {
   const [title, setTitle] = useState('');
-  const debouncedTitle = useDebounceValue(title);
+  const debouncedTitle = useDebounceValue(title, 1500);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +26,5 @@ export const NewTask = ({}: NewTaskProps) => {
     }
   }, [debouncedTitle]);
 
-  return (
-    <TaskRow key={'unique'} id={'unique'} title={title} setTitle={setTitle} />
-  );
+  return <TaskRow key={'unique'} title={title} setTitle={setTitle} />;
 };

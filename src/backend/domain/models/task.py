@@ -18,6 +18,10 @@ class Task(Model):
     finish_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=True, default=None
     )
+    is_finished: Mapped[bool] = mapped_column(
+        default=False,
+        nullable=False,
+    )
     user_id: Mapped[UUID | None] = mapped_column(
         ForeignKey("user.id", ondelete="SET NULL"),
         default=None,

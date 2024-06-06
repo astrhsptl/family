@@ -14,12 +14,12 @@ export const CreatedTask = ({ task }: CreatedTaskProps) => {
   const updatedTitle = useDebounceValue(title);
 
   useEffect(() => {
-    if (updatedTitle !== task.title) {
+    if (updatedTitle !== task.title && updatedTitle !== '') {
       taskRequests.update(task.id, { title: updatedTitle });
     }
   }, [updatedTitle]);
 
   return (
-    <TaskRow key={task.id} id={task.id} title={title} setTitle={setTitle} />
+    <TaskRow key={task.id} task={task} title={title} setTitle={setTitle} />
   );
 };
