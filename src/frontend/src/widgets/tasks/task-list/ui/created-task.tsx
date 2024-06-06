@@ -19,5 +19,7 @@ export const CreatedTask = ({ task }: CreatedTaskProps) => {
     }
   }, [updatedTitle]);
 
-  return <TaskRow key={task.id} title={title} setTitle={setTitle} />;
+  return (
+    <TaskRow key={task.id} id={task.id} title={title} setTitle={setTitle} />
+  );
 };

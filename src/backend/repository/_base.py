@@ -107,7 +107,8 @@ class BaseRepository:
 
         try:
             async with SESSION() as session:
-                await session.scalar(statement)
+                await session.execute(statement)
+                await session.commit()
                 return result.set_result("Entity success deleted")
         except IntegrityError as e:
             return result.set_error(400, (str(e)))

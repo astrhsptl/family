@@ -93,7 +93,7 @@ export class APICore<FetchType, RequestType> {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}`;
+    const url = `${this.url}${id}/`;
     return await axios
       .delete<FetchType>(url, this.setAuthenticationHeader(RequestConfig))
       .catch(() => {

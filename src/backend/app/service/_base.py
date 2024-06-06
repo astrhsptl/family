@@ -59,7 +59,7 @@ class BaseService:
         if result.detail:
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
 
-        return SuccessResponse(result.data, result.status_code)
+        return SuccessResponse(detail=result.data)
 
     def _paginate(self, request: Request, count: int, data, page: int, quantity: int):
         page = max(page, 1)

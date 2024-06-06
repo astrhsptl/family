@@ -14,7 +14,6 @@ class PaginatedResponse(BaseModel, Generic[T]):
 
 class SuccessResponse(BaseModel):
     detail: str
-    status_code: int
 
 
 class ErrorResponse(BaseModel):
