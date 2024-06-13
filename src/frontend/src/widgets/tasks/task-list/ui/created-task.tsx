@@ -1,9 +1,9 @@
 'use client';
 
-import { TaskRow } from '@/features';
-import { taskRequests } from '@/features/requests';
-import { Task, useDebounceValue } from '@/shared';
+import { Task, taskActions } from '@/entities';
+import { useAppDispatch, useDebounceValue } from '@/shared';
 import { useEffect, useState } from 'react';
+import { TaskRow } from './task-row';
 
 interface CreatedTaskProps {
   task: Task;
@@ -11,15 +11,16 @@ interface CreatedTaskProps {
 
 export const CreatedTask = ({ task }: CreatedTaskProps) => {
   const [title, setTitle] = useState(task.title);
+  const dispatch = useAppDispatch();
   const updatedTitle = useDebounceValue(title);
 
   useEffect(() => {
     if (updatedTitle !== task.title && updatedTitle !== '') {
-      taskRequests.update(task.id, { title: updatedTitle });
+      dispatch(
+        taskActions.update({ id: task.id, data: { title: updatedTitle } })
+      );
     }
   }, [updatedTitle]);
 
-  return (
-    <TaskRow key={task.id} task={task} title={title} setTitle={setTitle} />
-  );
+  return <TaskRow task={task} title={title} setTitle={setTitle} />;
 };

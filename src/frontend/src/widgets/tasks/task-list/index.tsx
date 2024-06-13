@@ -1,25 +1,25 @@
-'use server';
+'use client';
 
-import { API_SERVER_URL, PaginatedResult, TaskStyles } from '@/shared';
-import { Task } from '@/shared/model/types/task';
-import axios from 'axios';
-import { CreatedTask } from './ui';
-import { NewTask } from './ui/new-task';
+import { currentTasks, Task, taskActions } from '@/entities';
+import { TaskStyles, useAppDispatch, useAppSelector } from '@/shared';
+import { useEffect } from 'react';
+import { CreatedTask, NewTask } from './ui';
 
-interface TaskListProps {}
+interface TaskListProps {
+  tasks: Task[];
+}
 
-export const TaskList = async ({}: TaskListProps) => {
-  const tasks = await axios
-    .get<PaginatedResult<Task>>(`${API_SERVER_URL}/v1/task/`, {
-      params: {
-        order_by: 'created_date',
-      },
-    })
-    .then((r) => r.data.data);
+export const TaskList = ({ tasks }: TaskListProps) => {
+  const storeTasks = useAppSelector(currentTasks);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(taskActions.loads(tasks));
+  }, []);
 
   return (
     <section className={TaskStyles.taskList}>
-      {tasks?.map((task) => (
+      {storeTasks.tasks?.map((task) => (
         <CreatedTask key={task.id} task={task} />
       ))}
       <NewTask />

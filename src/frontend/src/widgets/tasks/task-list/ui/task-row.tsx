@@ -1,11 +1,15 @@
 'use client';
 
-import { DefaultCheckbox, montserrat, Task, TaskStyles } from '@/shared';
+import { changeStatus, removeTask, Task } from '@/entities';
+import {
+  DefaultCheckbox,
+  montserrat,
+  TaskStyles,
+  useAppDispatch,
+} from '@/shared';
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useState } from 'react';
 import toast from 'react-hot-toast';
-import { taskRequests } from '../requests';
 
 type TaskRowProps = {
   task?: Task;
@@ -19,66 +23,56 @@ export const TaskRow = ({
   setTitle,
   ...divProps
 }: TaskRowProps) => {
+  const dispatch = useAppDispatch();
   const [placeholderToggle, setPlaceholderToggle] = useState(title !== '');
   const [deleteFlag, setDeleteFlag] = useState(title === '');
-  const [isFinished, setIsFinished] = useState(
-    !task ? false : task.is_finished
-  );
-  const router = useRouter();
 
   return (
     <div className={TaskStyles.taskRow} {...divProps}>
       <DefaultCheckbox
         disabled={!placeholderToggle}
-        checked={isFinished}
+        checked={task?.is_finished}
         onChange={() => {
           if (!task) {
             return;
           }
-          setIsFinished(!isFinished);
-          return taskRequests
-            .update(task.id, { is_finished: isFinished })
-            .then((r) => {
-              toast.success(isFinished ? 'Closed' : 'Opened');
-              router.refresh();
-            });
+          return dispatch(changeStatus(task.id)).then(() => {
+            toast.success(task.is_finished ? 'Opened' : 'Closed');
+          });
         }}
       />
       <input
+        placeholder='Type to add'
+        value={title}
+        disabled={task?.is_finished}
+        className={clsx(
+          TaskStyles.taskText,
+          montserrat.className,
+          task?.is_finished ? TaskStyles.finished : ''
+        )}
         onChange={(e) => {
           if (e.target.value !== '') {
             setDeleteFlag(false);
           }
           setTitle(() => e.target.value);
         }}
-        placeholder='Type to add'
-        className={clsx(
-          TaskStyles.taskText,
-          montserrat.className,
-          isFinished ? TaskStyles.finished : ''
-        )}
         onFocusCapture={() => {
           setPlaceholderToggle(true);
         }}
         onBlur={(e) => {
           setPlaceholderToggle(e.currentTarget.value !== '');
         }}
-        value={title}
         onKeyUp={({ key }) => {
-          if (!task) {
-            return;
-          }
-
-          if (task.id === 'unique') {
+          if (!task || task.id === 'unique') {
             return;
           }
 
           if (key === 'Backspace' && title === '' && deleteFlag) {
-            return taskRequests.remove(task.id).then((r) => {
+            return dispatch(removeTask(task.id)).then(() => {
               toast.success('Successful delete');
-              router.refresh();
             });
           }
+
           if (key === 'Backspace' && title === '') {
             setDeleteFlag(true);
             return;

@@ -1,4 +1,4 @@
-import { Family } from '@/shared';
+import { Family } from '@/entities';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../types';
 

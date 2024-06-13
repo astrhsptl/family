@@ -1,4 +1,4 @@
-import { EntityId } from '../common';
+import { EntityId } from '@/shared';
 
 export interface UserCreate {
   first_name: string;

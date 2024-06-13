@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import {
   familyReducer,
   modalStateReducer,
-  taskReducer,
+  tasksReducer,
   userReducer,
 } from './slices';
 
@@ -11,6 +11,6 @@ export const store = configureStore({
     modalState: modalStateReducer,
     user: userReducer,
     family: familyReducer,
-    task: taskReducer,
+    task: tasksReducer,
   },
 });

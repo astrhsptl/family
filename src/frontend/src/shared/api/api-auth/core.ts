@@ -1,10 +1,10 @@
+import { User } from '@/entities';
 import {
   IAccessToken,
   IRefreshToken,
   ISignIn,
   ISignUp,
   TokenPair,
-  User,
   WrongResponse,
 } from '@/shared';
 import { API_SERVER_URL } from '@/shared/config';

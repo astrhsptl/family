@@ -1,6 +1,6 @@
 'use client';
 
-import { FormBaseLayout, useAppDispatch } from '@/features';
+import { FormBaseLayout } from '@/features';
 import { createFamily } from '@/features/new-family';
 import {
   BaseStyle,
@@ -8,6 +8,7 @@ import {
   DefaultInput,
   NewFamilyStyles,
   montserrat,
+  useAppDispatch,
 } from '@/shared';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';

@@ -1,8 +1,7 @@
 'use client';
 
 import { currentFamily } from '@/entities';
-import { useAppSelector } from '@/features';
-import { BackButton, FamilyStyles, montserrat } from '@/shared';
+import { BackButton, FamilyStyles, montserrat, useAppSelector } from '@/shared';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

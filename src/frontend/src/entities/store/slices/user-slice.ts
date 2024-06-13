@@ -1,4 +1,4 @@
-import { User } from '@/shared';
+import { User } from '@/entities';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../types';
 

@@ -1,8 +1,9 @@
 'use client';
 
 import { setFamily, setUser } from '@/entities';
-import { checkAuth, useAppDispatch } from '@/features';
+import { checkAuth } from '@/features';
 import { familyRequests } from '@/features/requests';
+import { useAppDispatch } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 

@@ -1,4 +1,4 @@
-import { EntityId } from '../common';
+import { EntityId } from '@/shared';
 
 export interface TaskCreate {
   title: string;
@@ -11,8 +11,9 @@ export interface TaskCreate {
   event_id?: string;
 }
 
-export type ITaskUpdate = Partial<TaskCreate>;
+export type TaskUpdate = Partial<TaskCreate>;
 
 export interface Task extends TaskCreate {
   id: EntityId;
+  is_finished: boolean;
 }

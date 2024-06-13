@@ -1,5 +1,5 @@
-import { RootProvider } from '@/features';
 import '@/shared/styles/base.css';
+import { RootProvider } from '@/widgets';
 import { Metadata } from 'next';
 
 interface RootLayoutProps {
